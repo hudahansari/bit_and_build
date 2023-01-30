@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML API</title>
+    <!-- <link rel="stylesheet" type="style/css" href="../css/index.css"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        body {
+            margin-top: 10vh;
+          background-color: rgb(0, 0, 0);
+          color: rgb(216, 216, 216);
+        }
+
+        ul, li {
+            background-color: rgb(0, 0, 0);
+          color: rgb(216, 216, 216);
+        }
+
+        /* .title-img {
+            height: 200px;
+            width: 500px;
+        } */
+        
+        </style>
+</head>
+
+<body onload="myFunction()">
+ <div class="container">
+	<div class="title-head">
+        <center><h1 >Archarios</h1></center>
+    </div>
+
+    <div class="container-fluid h-custom" style="margin-bottom: 10vh;">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-md-9 col-lg-6 col-xl-5">
+            <img src="https://i.ytimg.com/vi/eYgLjVUY8Hc/hqdefault.jpg" style="margin-bottom: 10vh;" class="img-fluid" alt="Sample image"/>
+          </div>
+          <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+            <!-- action="{{ url_for('predict')}}"method="post" -->
+            <form  action="{{ url_for('predict')}}" method="post">        
+              <div class="form-outline mb-4">
+                <input type="number" name="math_score" class="form-control form-control-lg"
+                  placeholder="Enter Physics score" />
+              </div>
+              <div class="form-outline mb-4">
+                <input type="number" name="reading_score" class="form-control form-control-lg"
+                  placeholder="Enter Chemistry score" />
+              </div>
+              <div class="form-outline mb-4">
+                <input type="number" name="writing_score" class="form-control form-control-lg"
+                  placeholder="Enter Math score" />
+              </div>
+    
+              <div class="text-center text-lg-start mt-4 pt-2">
+                <!-- type="submit" -->
+                <!-- onclick="displaySuggestions()"  -->
+                <button type="submit" onsubmit="event.preventDefault();" class="btn btn-primary btn-lg btn-block"
+                 style="padding-left: 2.5rem; padding-right: 2.5rem;" >Predict</button>
+              </div>
+            </form>
+          </div>
+          <div class="result container" style="margin-top: 5vh;">
+            <div class="" >
+              <button id="check" onclick="displaySuggestions()" class="btn btn-primary btn-lg"
+                 style="padding-left: 2.5rem; padding-right: 2.5rem; float: right;" >View</button>
+                <h4 id="start">View recommendations here</h4>
+                <h4 id="extraText">The predicted score is : <text id="myText">{{ prediction_text }}</text></h4>
+                <ul id="items" class="list-group search-list" style="padding: 10px; list-style-type: none;">
+                  
+                </ul>
+            </div>
+      </div>
+        </div>
+      </div>
+
+      
+   <!-- {{ prediction_text }} -->
+
+ </div>
+
+ <script>
+
+const check = document.querySelector("#check");
+check.addEventListener("click", displaySuggestions , false);
+
+// console.log("hello")
+    function myFunction()
+    {
+        // var prediction_text = -1;
+        
+        var items = document.querySelector('#items');
+        items.style.display = 'none';
+        items.replaceChildren();
+        // console.log(extraText)
+        var extraText = document.getElementById('extraText');
+        extraText.style.display = 'none';
+    }
+
+    function displaySuggestions(event) {
+      event.preventDefault();
+      console.log("hhhh");
+        var start = document.querySelector('#start');
+        start.style.display = 'none';
+        var items = document.querySelector('#items');
+        items.style.display = 'none';
+        items.replaceChildren();  
+        var prediction_text = document.getElementById("myText").textContent;
+        console.log(typeof prediction_text);
+        var extraText = document.getElementById('extraText');
+        extraText.style.display = 'flex';
+        // prediction_text = 1
+        console.log(prediction_text.localeCompare("0")==0)
+        if(prediction_text.localeCompare("0")==0) {
+            var list = document.getElementById('items');
+            var li = document.createElement('li');
+            // li.classList = 'list-group-item pointer' ;
+            var image = document.createElement('img');
+            image.src = "https://i.pinimg.com/736x/9d/15/b1/9d15b1083a53ff21125c51f169b1fa3a.jpg";
+            image.classList = "img-responsive rounded-circle float-left col-sm-5 title-img";
+            li.appendChild(image);
+            var text = document.createElement('div');
+            text.classList = "float-right col-sm-7";
+            var title = document.createElement('h4');
+            title.appendChild(document.createTextNode("Congratulations!"));
+            title.appendChild(document.createElement('br'));
+            title.appendChild(document.createTextNode("You are on the right track. Keep up the good work!"));
+            text.appendChild(title);
+            li.appendChild(text);
+            list.appendChild(li);
+        } else if(prediction_text.localeCompare("1")==0) {
+            var list = document.getElementById('items');
+            var li = document.createElement('li');
+            // li.classList = 'list-group-item pointer' ;
+            var image = document.createElement('img');
+            image.src = "https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1240w,f_auto,q_auto:best/newscms/2018_47/2654826/181121-wreck-it-ralph-breaks-the-internet-3-ew-228p.jpg";
+            image.classList = "img-responsive float-left col-sm-5 title-img";
+            li.appendChild(image);
+            var text = document.createElement('div');
+            text.classList = "float-right col-sm-7";
+            var title = document.createElement('h4');
+            title.appendChild(document.createTextNode("Yayyy!"));
+            title.appendChild(document.createElement('br'));
+            title.appendChild(document.createTextNode("You are doing great. Just keep calm and study!"));
+            text.appendChild(title);
+            li.appendChild(text);
+            list.appendChild(li);
+        } else if(prediction_text.localeCompare("2")==0) {
+            var list = document.getElementById('items');
+            var li = document.createElement('li');
+            // li.classList = 'list-group-item pointer' ;
+            var image = document.createElement('img');
+            image.src = "https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1240w,f_auto,q_auto:best/newscms/2018_47/2654826/181121-wreck-it-ralph-breaks-the-internet-3-ew-228p.jpg";
+            image.classList = "img-responsive float-left col-sm-5 title-img";
+            li.appendChild(image);
+            var text = document.createElement('div');
+            text.classList = "float-right col-sm-7";
+            var title = document.createElement('h4');
+            title.appendChild(document.createTextNode("Doing well!"));
+            title.appendChild(document.createElement('br'));
+            title.appendChild(document.createTextNode("You have great potential. We believe in you "));
+            text.appendChild(title);
+            var aTag = document.createElement('a');
+            aTag.setAttribute('href',"https://schools.aglasem.com/cbse-notes-class-12-maths-matrices/");
+            aTag.innerText = "Maths Study Material";
+            text.appendChild(aTag);
+            text.appendChild(document.createElement('br'));
+            var aTag = document.createElement('a');
+            aTag.setAttribute('href',"https://schools.aglasem.com/cbse-notes-class-12-physics-electrostatics/");
+            aTag.innerText = "Physics Study Material";
+            text.appendChild(aTag);
+            text.appendChild(document.createElement('br'));
+            var aTag = document.createElement('a');
+            aTag.setAttribute('href',"https://schools.aglasem.com/cbse-notes-class-12-chemistry-the-solid-state/");
+            aTag.innerText = "Chemistry Study Material";
+            text.appendChild(aTag);
+            text.appendChild(document.createElement('br'));
+            li.appendChild(text);
+            list.appendChild(li);
+        } else if(prediction_text.localeCompare("3")==0) {
+            var list = document.getElementById('items');
+            var li = document.createElement('li');
+            // li.classList = 'list-group-item pointer' ;
+            var image = document.createElement('img');
+            image.src = "https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1240w,f_auto,q_auto:best/newscms/2018_47/2654826/181121-wreck-it-ralph-breaks-the-internet-3-ew-228p.jpg";
+            image.classList = "img-responsive float-left col-sm-5 title-img";
+            li.appendChild(image);
+            var text = document.createElement('div');
+            text.classList = "float-right col-sm-7";
+            var title = document.createElement('h4');
+            title.appendChild(document.createTextNode("You're doing okay. Have faith, you can still improve your grades"));
+            title.appendChild(document.createElement('br'));
+            title.appendChild(document.createTextNode("Revise all the concepts carefully"));
+            text.appendChild(title);
+            var aTag = document.createElement('a');
+            aTag.setAttribute('href',"https://schools.aglasem.com/cbse-notes-class-12-maths-matrices/");
+            aTag.innerText = "Maths Study Material";
+            text.appendChild(aTag);
+            text.appendChild(document.createElement('br'));
+            var aTag = document.createElement('a');
+            aTag.setAttribute('href',"https://schools.aglasem.com/cbse-notes-class-12-physics-electrostatics/");
+            aTag.innerText = "Physics Study Material";
+            text.appendChild(aTag);
+            text.appendChild(document.createElement('br'));
+            var aTag = document.createElement('a');
+            aTag.setAttribute('href',"https://schools.aglasem.com/cbse-notes-class-12-chemistry-the-solid-state/");
+            aTag.innerText = "Chemistry Study Material";
+            text.appendChild(aTag);
+            text.appendChild(document.createElement('br'));
+            var aTag = document.createElement('a');
+            aTag.setAttribute('href',"https://www.youtube.com/watch?v=_BPZqgD0aTc");
+            aTag.innerText = "Maths Reference Material";
+            text.appendChild(aTag);
+            text.appendChild(document.createElement('br'));
+            var aTag = document.createElement('a');
+            aTag.setAttribute('href',"https://www.youtube.com/watch?v=Z-ebVhUvRtM&list=PLQt_k2WYNnct3dxb-dTwHvGYhCYpli4Og");
+            aTag.innerText = "Physics Reference Material";
+            text.appendChild(aTag);
+            text.appendChild(document.createElement('br'));
+            var aTag = document.createElement('a');
+            aTag.setAttribute('href',"https://youtu.be/U6ORjJ2dGMA");
+            aTag.innerText = "Chemistry Reference Material";
+            text.appendChild(aTag);
+            text.appendChild(document.createElement('br'));
+
+            li.appendChild(text);
+            list.appendChild(li);
+        }  else if(prediction_text.localeCompare("4")==0) {
+            var list = document.getElementById('items');
+            var li = document.createElement('li');
+            // li.classList = 'list-group-item pointer' ;
+            var image = document.createElement('img');
+            image.src = "https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1240w,f_auto,q_auto:best/newscms/2018_47/2654826/181121-wreck-it-ralph-breaks-the-internet-3-ew-228p.jpg";
+            image.classList = "img-responsive float-left col-sm-5 title-img";
+            li.appendChild(image);
+            var text = document.createElement('div');
+            text.classList = "float-right col-sm-7";
+            var title = document.createElement('h4');
+            title.appendChild(document.createTextNode("Your scores aren't up to the mark, you need to start working hard"));
+            title.appendChild(document.createElement('br'));
+            title.appendChild(document.createTextNode("Learn all the concepts thoroughly and attend extra lectures"));
+            title.appendChild(document.createElement('br'));
+            title.appendChild(document.createTextNode("You will have mentoring session once a week"));
+            text.appendChild(title);
+            var aTag = document.createElement('a');
+            aTag.setAttribute('href',"https://schools.aglasem.com/cbse-notes-class-12-maths-matrices/");
+            aTag.innerText = "Maths Study Material";
+            text.appendChild(aTag);
+            text.appendChild(document.createElement('br'));
+            var aTag = document.createElement('a');
+            aTag.setAttribute('href',"https://schools.aglasem.com/cbse-notes-class-12-physics-electrostatics/");
+            aTag.innerText = "Physics Study Material";
+            text.appendChild(aTag);
+            text.appendChild(document.createElement('br'));
+            var aTag = document.createElement('a');
+            aTag.setAttribute('href',"https://schools.aglasem.com/cbse-notes-class-12-chemistry-the-solid-state/");
+            aTag.innerText = "Chemistry Study Material";
+            text.appendChild(aTag);
+            text.appendChild(document.createElement('br'));
+            var aTag = document.createElement('a');
+            aTag.setAttribute('href',"https://www.youtube.com/watch?v=_BPZqgD0aTc");
+            aTag.innerText = "Maths Reference Material";
+            text.appendChild(aTag);
+            text.appendChild(document.createElement('br'));
+            var aTag = document.createElement('a');
+            aTag.setAttribute('href',"https://www.youtube.com/watch?v=Z-ebVhUvRtM&list=PLQt_k2WYNnct3dxb-dTwHvGYhCYpli4Og");
+            aTag.innerText = "Physics Reference Material";
+            text.appendChild(aTag);
+            text.appendChild(document.createElement('br'));
+            var aTag = document.createElement('a');
+            aTag.setAttribute('href',"https://youtu.be/U6ORjJ2dGMA");
+            aTag.innerText = "Chemistry Reference Material";
+            text.appendChild(aTag);
+            li.appendChild(text);
+            list.appendChild(li);
+        } else if(prediction_text.localeCompare("5")==0) {
+            var list = document.getElementById('items');
+            var li = document.createElement('li');
+            // li.classList = 'list-responsive float-left col-sm-5 title-img";
+            var text = document.createElement('div');
+            var image = document.createElement('img');
+            image.src = "https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1240w,f_auto,q_auto:best/newscms/2018_47/2654826/181121-wreck-it-ralph-breaks-the-internet-3-ew-228p.jpg";
+            image.classList = "img-responsive float-left col-sm-5 title-img"
+            li.appendChild(image);
+            text.classList = "float-right col-sm-7";
+            var title = document.createElement('h4');
+            title.appendChild(document.createTextNode("Poor performance. You need to work extremely hard to improve your grades"));
+            title.appendChild(document.createElement('br'));
+            title.appendChild(document.createTextNode("You'll need to attend mentoring session to improve your grades. Pay attention in class and attend extra lectures."));
+            title.appendChild(document.createElement('br'));
+            title.appendChild(document.createTextNode("You will have mentoring session twice a week"));
+            title.appendChild(document.createElement('br'));
+            title.appendChild(document.createTextNode("You will have compulsory test once a week"));
+            text.appendChild(title);
+            var aTag = document.createElement('a');
+            aTag.setAttribute('href',"https://schools.aglasem.com/cbse-notes-class-12-maths-matrices/");
+            aTag.innerText = "Maths Study Material";
+            text.appendChild(aTag);
+            text.appendChild(document.createElement('br'));
+            var aTag = document.createElement('a');
+            aTag.setAttribute('href',"https://schools.aglasem.com/cbse-notes-class-12-physics-electrostatics/");
+            aTag.innerText = "Physics Study Material";
+            text.appendChild(aTag);
+            text.appendChild(document.createElement('br'));
+            var aTag = document.createElement('a');
+            aTag.setAttribute('href',"https://schools.aglasem.com/cbse-notes-class-12-chemistry-the-solid-state/");
+            aTag.innerText = "Chemistry Study Material";
+            text.appendChild(aTag);
+            text.appendChild(document.createElement('br'));
+            var aTag = document.createElement('a');
+            aTag.setAttribute('href',"https://www.youtube.com/watch?v=_BPZqgD0aTc");
+            aTag.innerText = "Maths Reference Material";
+            text.appendChild(aTag);
+            text.appendChild(document.createElement('br'));
+            var aTag = document.createElement('a');
+            aTag.setAttribute('href',"https://www.youtube.com/watch?v=Z-ebVhUvRtM&list=PLQt_k2WYNnct3dxb-dTwHvGYhCYpli4Og");
+            aTag.innerText = "Physics Reference Material";
+            text.appendChild(aTag);
+            text.appendChild(document.createElement('br'));
+            var aTag = document.createElement('a');
+            aTag.setAttribute('href',"https://youtu.be/U6ORjJ2dGMA");
+            aTag.innerText = "Chemistry Reference Material";
+            text.appendChild(aTag);
+            li.appendChild(text);
+            list.appendChild(li);
+        } 
+        document.querySelector('#items').style.display = 'flex';   
+    }
+ </script>
+</body>
+</html>
